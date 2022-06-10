@@ -1,0 +1,11 @@
+wp-admin/
+wp-content/languages/
+wp-content/plugin/akismet/
+wp-content/themes/twentytwenty/
+wp-content/themes/twentytwentyone/
+wp-content/themes/twentytwentytwo/
+wp-content/uploads/
+wp-includes/
+readme.html
+.htaccess
+license.txt
