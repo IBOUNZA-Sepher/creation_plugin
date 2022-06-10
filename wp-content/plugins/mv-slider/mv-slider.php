@@ -76,6 +76,18 @@ if ( !class_exists('MV_Slider')) {
             flush_rewrite_rules();
         }
         public static function uninstall(){
+            delete_option('mv_slider_options');
+
+            $posts = get_posts(
+                array(
+                    'post_type' => 'mv-slider',
+                    'number_posts' => -1,
+                    'post_status' => 'any'
+                )
+            );
+            foreach($posts as $post){
+                wp_delete_post($post-> ID, true);
+            }
 
         }
 
@@ -91,8 +103,8 @@ if ( !class_exists('MV_Slider')) {
         //On commence à créer un sous menu sur le tableau de bord pour Sliders
         public function add_menu(){//add_thème_page; add_options_page
             add_menu_page(//add_plugin_page; il faut enlever l'icon pour l'ajouter au sous menu de plugin
-                'MV Slider Options',
-                'MV Slider',
+                esc_html__('MV Slider Options','mv-slider'),
+                esc_html__('MV Slider','mv-slider'),
                 'manage_options',
                 'mv_slider_admin',
                 array($this, 'mv_slider_setting_page'),
@@ -102,8 +114,8 @@ if ( !class_exists('MV_Slider')) {
             //on ajoute au sous menu un lien qui ramène à la page du plugin Sliders
             add_submenu_page(//il recevoir au moin 7paramètres sinon il envoie un message d'erreur
                 'mv_slider_admin', //'edit-comments.php', pour l'afficher Sur la table commentaires 
-                'Manage Slides',
-                'Manage Slides',
+                esc_html__('Manage Slides','mv-slider'),
+                esc_html__('Manage Slides','mv-slider'),
                 'manage_options',
                 'edit.php?post_type=mv-slider',
                 null,
@@ -112,8 +124,8 @@ if ( !class_exists('MV_Slider')) {
             //on ajoute au sous menu un lien qui ramène à la page du plugin Sliders de New page
             add_submenu_page(//il recevoir au moin 7paramètres sinon il envoie un message d'erreur
                 'mv_slider_admin',//pour l'afficher sous-menu MV Slider 
-                'Add New Slides',
-                'Add New Slides',
+                esc_html__('Add New Slides','mv-slider'),
+                esc_html__('Add New Slides','mv-slider'),
                 'manage_options',
                 'post-new.php?post_type=mv-slider',
                 null,
@@ -127,7 +139,8 @@ if ( !class_exists('MV_Slider')) {
             if( isset($_GET['settings-updated'])){
                 //quand la personne enregistre ses information et que s'est dans la base de donnée.
                 //on lui envoie un message de success
-                add_settings_error('mv_slider_options', 'mv_slider_message', 'settings saved','success');
+                add_settings_error('mv_slider_options', 'mv_slider_message',
+                esc_html__('Settings saved','mv-slider'),'success');
             }
             settings_errors('mv_slider_options');
             require( MV_SLIDER_PATH . 'views/settings-page.php' );

@@ -11,7 +11,7 @@
 
 get_header();
 //On va ajouter au debut des pages le plugin MV_Slider. L'image prend 100% de largeur
-echo  do_shortcode("[mv_slider id=' 28,29, 30'orderby='rang']Just a title[/mv_slider]");
+echo  do_shortcode("[mv_slider id='28, 29, 30'orderby='rang']Just a title[/mv_slider]");
 
 ?>
 

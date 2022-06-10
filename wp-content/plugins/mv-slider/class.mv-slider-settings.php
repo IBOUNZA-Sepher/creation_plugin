@@ -17,14 +17,14 @@ if (! class_exists('MV_Slider_Settings')) {
             //première partie de la section
             add_settings_section(//Trois paramettres
                 'mv_slider_main_section',//nom de la fonction
-                'How does it work?',
+                esc_html__('How does it work?','mv-slider'),
                 null,
                 'mv_slider_page1'
 
             );
             add_settings_field(
                 'mv_slider_shortcode',//la reférence dans la base de donnée clé
-                'Shortcode', //le titre de la section
+                esc_html__('Shortcode','mv-slider'), //le titre de la section
                 array($this, 'mv_slider_shortcode_callback'),
                 'mv_slider_page1',
                 'mv_slider_main_section'
@@ -33,14 +33,14 @@ if (! class_exists('MV_Slider_Settings')) {
             //seconde parties de la section
             add_settings_section(//Trois paramettres
                 'mv_slider_second_section',//nom de la fonction
-                'Other Plugin Option?',
+                esc_html__('Other Plugin Option?','mv-slider'),
                 null,
                 'mv_slider_page2'
 
             );
             add_settings_field(
                 'mv_slider_title',//la reférence dans la base de donnée comme clé
-                'Slider Title', //le titre de la section
+                esc_html__('Slider Title','mv-slider'), //le titre de la section
                 array($this, 'mv_slider_title_callback'),
                 'mv_slider_page2',
                 'mv_slider_second_section',
@@ -50,7 +50,7 @@ if (! class_exists('MV_Slider_Settings')) {
             );
             add_settings_field(
                 'mv_slider_bullets',//la reférence dans la base de donnée comme clé
-                'Display Bullets', //le titre de la section
+                esc_html__('Display Bullets','mv-slider'), //le titre de la section
                 array($this, 'mv_slider_bullets_callback'),
                 'mv_slider_page2',
                 'mv_slider_second_section',
@@ -60,7 +60,7 @@ if (! class_exists('MV_Slider_Settings')) {
             );
             add_settings_field(
                 'mv_slider_style',//la reférence dans la base de donnée comme clé
-                'Slider Style', //le titre de la section
+                esc_html__('Slider Style','mv-slider'), //le titre de la section
                 array($this, 'mv_slider_style_callback'),
                 'mv_slider_page2',
                 'mv_slider_second_section',
@@ -76,7 +76,8 @@ if (! class_exists('MV_Slider_Settings')) {
        //associé à la 1ère partie de la section
        public function mv_slider_shortcode_callback(){
         ?>
-        <span>Use the shortcode [mv_slider] to display the slider in any page/post/widget </span>   
+        <span><?php esc_html_e('Use the shortcode [mv_slider] to display the slider in any page/post/widget'
+        ,'mv-slider');?></span>   
         <?php
        }
 
@@ -102,7 +103,8 @@ if (! class_exists('MV_Slider_Settings')) {
         }
          ?>
         /> 
-        <label for="mv_slider_bullets">Whether to display bullets or not</label>
+        <label for="mv_slider_bullets"><?php esc_html_e('Whether to display bullets or not'
+        ,'mv-slider');?></label>
         <?php
        }
        public function mv_slider_style_callback($args){
@@ -142,8 +144,9 @@ if (! class_exists('MV_Slider_Settings')) {
                     case 'mv_slider_title':
                         if (empty($value)) {
                             //si la personne n'a pas rempli la partie text, on lui envoie un message d'erreur
-                            add_settings_error('mv_slider_options', 'mv_slider_message','The title field can not be left empty','error');
-                            $value = 'Please, type some text';
+                            add_settings_error('mv_slider_options', 'mv_slider_message',
+                            esc_html__('The title field can not be left empty','mv-slider'),'error');
+                            $value = esc_html__('Please, type some text','mv-slider');
                         }
                         $new_input[$key] = sanitize_text_field($value);
                         break;
