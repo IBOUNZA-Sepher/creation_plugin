@@ -43,4 +43,12 @@
     endwhile;
     wp_reset_postdata();
 endif;
+//juste en dessous
+//on fait les modification pour travaller avec le plugin 'Show current template'
+//par raport au lien, on aura les differente forme du template du thème twentytwenty
+
+
 ?>
+
+<a href="<?php echo get_post_type_archive_link( 'mv-testimonials' ); ?>">
+    <?php echo esc_html_e( 'Show More Testimonials', 'mv-testimonials' ); ?></a>

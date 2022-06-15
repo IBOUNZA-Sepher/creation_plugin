@@ -48,6 +48,9 @@ if( !class_exists( 'MV_Testimonials' ) ){
             require_once( MV_TESTIMONIALS_PATH . 'widgets/class.mv-testimonials-widget.php' );
             $MVTestimonialsWidget = new MV_Testimonials_Widget();    
 
+            //On va utiliser le plugin qui filtre les templates
+            add_filter('archive_template', array($this,'load_custom_archive_template'));
+            add_filter('single_template', array($this,'load_custom_single_template'));
         }
 
          /**
@@ -57,7 +60,37 @@ if( !class_exists( 'MV_Testimonials' ) ){
             // Path/URL to root of this plugin, with trailing slash.
             define ( 'MV_TESTIMONIALS_PATH', plugin_dir_path( __FILE__ ) );
             define ( 'MV_TESTIMONIALS_URL', plugin_dir_url( __FILE__ ) );
-            define ( 'MV_TESTIMONIALS_VERSION', '1.0.0' );     
+            define ( 'MV_TESTIMONIALS_VERSION', '1.0.0' );  
+            //Comme pour l'exemple de woocomerce, cette ligne permettra d'exécuter le plugin sur tous les thèmes
+            define ( 'MV_TESTIMONIALS_OVERRIDE_PATH_DIR', get_stylesheet_directory().'/mv-testimonials/' );    
+        }
+
+        //
+        public function load_custom_archive_template($tpl){
+            if(current_theme_supports('mv-testimonials')){//pour que ça marche partout
+                if(is_post_type_archive('mv-testimonials')){//il marche qu'à l'extérieur de mv-testimonial
+                    $tpl = MV_TESTIMONIALS_PATH . 'views/templates/archive-mv-testimonials.php';
+                }
+            }
+            return $tpl;
+        }
+        public function load_custom_single_template($tpl){
+            if(current_theme_supports('mv-testimonials')){//pour que ça marche partout
+                if(is_singular('mv-testimonials')){//il marche qu'à l'extérieur de mv-testimonial
+                    $tpl = MV_TESTIMONIALS_PATH . 'views/templates/single-mv-testimonials.php';
+                }
+            }
+            return $tpl;
+        }
+
+        //On créet la fonction qui permettra d'utiliser le plugin sur tous les thèmes
+        public function get_template_part_location($file){
+            if(file_exists(MV_TESTIMONIALS_OVERRIDE_PATH_DIR . $file)){
+                $file = MV_TESTIMONIALS_OVERRIDE_PATH_DIR . $file;
+            } else{
+                $file = MV_TESTIMONIALS_PATH .'views/template' . $file;
+            }
+            return $file;
         }
 
         /**
